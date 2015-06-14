@@ -42,7 +42,8 @@ module.exports = function(grunt) {
           collapseWhitespace: true
         },
         files: {                                   // Dictionary of files
-          'index.html': 'src/index.html'
+          'index.html': 'src/index.html',          // 'Destination' : 'Source'
+          'project-2048.html': 'src/project-2048.html'
         }
       }
     }
