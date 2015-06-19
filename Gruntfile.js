@@ -44,7 +44,8 @@ module.exports = function(grunt) {
         files: {                                   // Dictionary of files
           'index.html': 'src/index.html',          // 'Destination' : 'Source'
           'project-2048.html': 'src/project-2048.html',
-          'project-webperf.html': 'src/project-webperf.html'
+          'project-webperf.html': 'src/project-webperf.html',
+          'project-mobile.html': 'src/project-mobile.html'
         }
       }
     }
