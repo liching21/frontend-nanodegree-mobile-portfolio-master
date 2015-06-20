@@ -505,17 +505,18 @@ function updatePositions() {
   // UPDATED: removed .querySelectorAll
   var items = document.getElementsByClassName('mover');
 
-  var scrollTop = document.body.scrollTop
+  var scrollTop = document.body.scrollTop;
 
   //UPDATED: created a phases array to store the 5 different phases
   var phasesArray = [];
   for (var i = 0; i < 5; i++){
-    phasesArray[i] = Math.sin((scrollTop / 1250) + i);
+    phasesArray[i] = Math.sin((scrollTop/ 1250) + i);
   }
 
+  //UPDATED: used transformX instead of left
   for (var i = 0; i < items.length; i++) {
-
-    items[i].style.left = items[i].basicLeft + 100 * phasesArray[i % 5] + 'px';
+    var numPixel = items[i].basicLeft + 100 * phasesArray[i % 5] - screen.width / 2;
+    items[i].style.transform = "translateX(" + numPixel + "px)";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -535,7 +536,10 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+
+  var numOfPizzas = Math.ceil(screen.height / 256) * 5;
+
+  for (var i = 0; i < numOfPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
