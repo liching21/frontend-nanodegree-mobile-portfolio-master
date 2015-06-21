@@ -19,7 +19,6 @@ cameron *at* udacity *dot* com
 // As you may have realized, this website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
 "use strict";
-var numOfPizzas = 100;
 
 
 var pizzaIngredients = {};
@@ -431,8 +430,6 @@ var resizePizzas = function(size) {
     var windowwidth = document.querySelector("#randomPizzas").offsetWidth;
     var oldsize = oldwidth / windowwidth;
 
-    // TODO: change to 3 sizes? no more xl?
-    // Changes the slider value to a percent width
     function sizeSwitcher (size) {
       switch(size) {
         case "1":
@@ -456,11 +453,11 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
 
     //UPDATED: Perform calculations outside of the loop since all pizzas have the same side
-    var pizza = document.getElementsByClassName('randomPizzaContainer')
+    var pizza = document.getElementsByClassName('randomPizzaContainer');
     var dx = determineDx(pizza[0], size);
     var newwidth = (pizza[0].offsetWidth + dx) + 'px';
 
-    for (var i = 0; i < numOfPizzas; i++) {
+    for (var i = 0, len = pizza.length; i < len; i++) {
       pizza[i].style.width = newwidth;
     }
   }
@@ -477,8 +474,11 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+
+//UPDATE: Removed pizzasDiv from the for loop.
+var pizzasDiv = document.getElementById("randomPizzas");
+
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
@@ -522,8 +522,10 @@ function updatePositions() {
   }
 
   //UPDATED: used transformX instead of left
-  for (var i = 0; i < items.length; i++) {
-    var numPixel = items[i].basicLeft + 100 * phasesArray[i % 5] - screen.width / 2;
+  var numPixel;
+  var halfWidth = window.innerWidth / 2;
+  for (i = 0; i < items.length; i++) {
+    numPixel = items[i].basicLeft + 100 * phasesArray[i % 5] - halfWidth;
     items[i].style.transform = "translateX(" + numPixel + "px)";
   }
 
@@ -545,6 +547,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
 
+  var row = Math.ceil(window.innerHeight / 256);
+  var numOfPizzas = row * cols;
+
   for (var i = 0; i < numOfPizzas; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -553,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
